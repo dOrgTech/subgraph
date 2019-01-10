@@ -41,8 +41,9 @@ describe('Subscriptions', () => {
     );
 
     let event;
-
-    const consumer = await subscriptionClient.subscribe(
+    for (var i = 0;i<10;i++) {
+      console.log(i)
+    var consumer = await subscriptionClient.subscribe(
       (eventData) => {
         // Do something on receipt of the event
         event = eventData.data.reputationMints;
@@ -64,5 +65,6 @@ describe('Subscriptions', () => {
     });
 
     consumer.unsubscribe();
-  }, 2500);
+  }
+}, 100000);
 });
