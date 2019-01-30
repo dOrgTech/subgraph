@@ -1,5 +1,6 @@
 import {
   getContractAddresses,
+  getIPFSClient,
   getOptions,
   getWeb3,
   sendQuery,
@@ -15,11 +16,13 @@ describe('Domain Layer', () => {
   let web3;
   let addresses;
   let opts;
+  let ipfs;
 
   beforeAll(async () => {
     web3 = await getWeb3();
     addresses = getContractAddresses();
     opts = await getOptions(web3);
+    ipfs = getIPFSClient();
   });
 
   it('migration dao', async () => {
@@ -222,8 +225,22 @@ describe('Domain Layer', () => {
     // there are 6 founders that have tokens in this DAO
     expect(tokenHolders.length).toEqual(6);
 
-    const descHash =
-      '0x000000000000000000000000000000000000000000000000000000000000abcd';
+    // Save proposal data to IPFS
+
+    let proposalIPFSData = {
+      description: 'Just eat them',
+      title: 'A modest proposal',
+      url: 'http://swift.org/modest',
+    };
+
+    let proposalDescription = proposalIPFSData.description;
+    let proposalTitle = proposalIPFSData.title;
+    let proposalUrl = proposalIPFSData.url;
+
+    const ipfsResponse = await ipfs.add(new Buffer(JSON.stringify(proposalIPFSData)));
+
+    const descHash = ipfsResponse[0].path;
+
     async function propose({
       rep,
       tokens,
@@ -286,6 +303,9 @@ describe('Domain Layer', () => {
         proposal(id: "${p1}") {
             id
             descriptionHash
+            title
+            description
+            url
             stage
             createdAt
             boostedAt
@@ -358,6 +378,9 @@ describe('Domain Layer', () => {
     expect(proposal).toMatchObject({
       id: p1,
       descriptionHash: descHash,
+      title: proposalTitle,
+      description: proposalDescription,
+      url: proposalUrl,
       stage: 'Open',
       createdAt: p1Creation.toString(),
       boostedAt: null,
@@ -408,6 +431,9 @@ describe('Domain Layer', () => {
     expect(proposal).toMatchObject({
       id: p1,
       descriptionHash: descHash,
+      title: proposalTitle,
+      description: proposalDescription,
+      url: proposalUrl,
       stage: 'Open',
       createdAt: p1Creation.toString(),
       boostedAt: null,
@@ -469,6 +495,9 @@ describe('Domain Layer', () => {
     expect(proposal).toMatchObject({
       id: p1,
       descriptionHash: descHash,
+      title: proposalTitle,
+      description: proposalDescription,
+      url: proposalUrl,
       stage: 'Open',
       createdAt: p1Creation.toString(),
       boostedAt: null,
@@ -540,6 +569,9 @@ describe('Domain Layer', () => {
     expect(proposal).toMatchObject({
       id: p1,
       descriptionHash: descHash,
+      title: proposalTitle,
+      description: proposalDescription,
+      url: proposalUrl,
       stage: 'Open',
       createdAt: p1Creation.toString(),
       boostedAt: null,
@@ -643,6 +675,9 @@ describe('Domain Layer', () => {
     expect(proposal).toMatchObject({
       id: p1,
       descriptionHash: descHash,
+      title: proposalTitle,
+      description: proposalDescription,
+      url: proposalUrl,
       stage: 'Resolved',
       createdAt: p1Creation.toString(),
       boostedAt: null,

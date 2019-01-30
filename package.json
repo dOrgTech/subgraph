@@ -60,6 +60,7 @@
 		"graphql-tag": "^2.10.0",
 		"handlebars": "^4.0.12",
 		"hdwallet-accounts": "0.0.1",
+		"ipfs-http-client": "^29.0.1",
 		"jest": "^23.6.0",
 		"js-yaml": "^3.12.0",
 		"moment": "^2.22.2",

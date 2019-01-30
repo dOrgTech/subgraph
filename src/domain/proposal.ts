@@ -1,4 +1,4 @@
-import { Address, BigInt, Bytes, crypto, store } from '@graphprotocol/graph-ts';
+import { Address, BigInt, Bytes, ipfs, store, json } from '@graphprotocol/graph-ts';
 import { GenesisProtocol } from '../types/GenesisProtocol/GenesisProtocol';
 import { Proposal } from '../types/schema';
 import { concat, equals } from '../utils';
@@ -138,6 +138,14 @@ export function updateCRProposal(
   proposal.periods = periods;
   proposal.externalToken = externalToken;
   proposal.descriptionHash = descriptionHash;
+
+  // IPFS reading
+
+  let descJson = json.fromBytes(ipfs.cat(descriptionHash));
+  proposal.title = descJson.toString();
+  proposal.description = descJson.toString();
+  proposal.url = descJson.toString();
+
   saveProposal(proposal);
 }
 
