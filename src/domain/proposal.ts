@@ -1,4 +1,4 @@
-import { Address, BigInt, Bytes, ipfs, store, json } from '@graphprotocol/graph-ts';
+import { Address, BigInt, Bytes, ipfs, json, store } from '@graphprotocol/graph-ts';
 import { GenesisProtocol } from '../types/GenesisProtocol/GenesisProtocol';
 import { Proposal } from '../types/schema';
 import { concat, equals } from '../utils';

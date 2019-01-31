@@ -1,10 +1,10 @@
 const path = require('path');
 require('dotenv').config();
-const IPFSClient = require('ipfs-http-client')
+const IPFSClient = require('ipfs-http-client');
 
 process.env = {
   ethereum: 'http://127.0.0.1:8545',
-  ipfs: 'http://127.0.0.1:5001',
+  ipfs: '/ip4/127.0.0.1/tcp/5001',
   node_http: 'http://127.0.0.1:8000/subgraphs/name/daostack',
   node_ws: 'http://127.0.0.1:8001/subgraphs/name/daostack',
   test_mnemonic:
@@ -71,8 +71,10 @@ export async function getOptions(web3) {
   };
 }
 
-export async function getIPFSClient() {
-  return IPFSClient(ipfs);
+export async function writeProposalIPFS(data: any) {
+  const ipfsClient = IPFSClient(ipfs);
+  const ipfsResponse = await ipfsClient.add(new Buffer(JSON.stringify(data)));
+  return ipfsResponse[0].path;
 }
 
 export function padZeros(str: string, max = 36) {

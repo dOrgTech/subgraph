@@ -1,10 +1,10 @@
 import {
   getContractAddresses,
-  getIPFSClient,
   getOptions,
   getWeb3,
   sendQuery,
   waitUntilTrue,
+  writeProposalIPFS,
 } from './util';
 
 const ContributionReward = require('@daostack/arc/build/contracts/ContributionReward.json');
@@ -16,13 +16,11 @@ describe('Domain Layer', () => {
   let web3;
   let addresses;
   let opts;
-  let ipfs;
 
   beforeAll(async () => {
     web3 = await getWeb3();
     addresses = getContractAddresses();
     opts = await getOptions(web3);
-    ipfs = getIPFSClient();
   });
 
   it('migration dao', async () => {
@@ -236,10 +234,7 @@ describe('Domain Layer', () => {
     let proposalDescription = proposalIPFSData.description;
     let proposalTitle = proposalIPFSData.title;
     let proposalUrl = proposalIPFSData.url;
-
-    const ipfsResponse = await ipfs.add(new Buffer(JSON.stringify(proposalIPFSData)));
-
-    const descHash = ipfsResponse[0].path;
+    const descHash = await writeProposalIPFS(proposalIPFSData);
 
     async function propose({
       rep,
