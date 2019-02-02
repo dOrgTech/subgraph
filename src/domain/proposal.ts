@@ -1,8 +1,7 @@
 import { Address, BigInt, Bytes, ipfs, json, store } from '@graphprotocol/graph-ts';
 import { GenesisProtocol } from '../types/GenesisProtocol/GenesisProtocol';
 import { Proposal } from '../types/schema';
-import { concat, equals } from '../utils';
-import { getMember } from './member';
+import { equals } from '../utils';
 
 export function parseOutcome(num: BigInt): string {
   if (equals(num, BigInt.fromI32(1))) {
@@ -140,11 +139,11 @@ export function updateCRProposal(
   proposal.descriptionHash = descriptionHash;
 
   // IPFS reading
-
-  let descJson = json.fromBytes(ipfs.cat(descriptionHash));
-  proposal.title = descJson.toString();
-  proposal.description = descJson.toString();
-  proposal.url = descJson.toString();
+  let ipfsData = ipfs.cat('/ipfs/' + descriptionHash);
+  let descJson = json.fromBytes(ipfsData);
+  proposal.title = descJson.toObject().get('title').toString();
+  proposal.description = descJson.toObject().get('description').toString();
+  proposal.url = descJson.toObject().get('url').toString();
 
   saveProposal(proposal);
 }
