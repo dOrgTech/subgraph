@@ -533,7 +533,7 @@ describe('Domain Layer', () => {
     const s2Timestamp = await stake({
       proposalId: p1,
       outcome: PASS,
-      amount: web3.utils.toWei('100'),
+      amount: web3.utils.toWei('101'),
       staker: accounts[1].address,
     });
 
@@ -565,9 +565,9 @@ describe('Domain Layer', () => {
       votesFor: '0',
       votesAgainst: '1000000000000000000000',
       winningOutcome: 'Fail',
-      stakesFor: '100000000000000000000',
+      stakesFor: '101000000000000000000',
       stakesAgainst: '100000000100000000000',
-      confidence: '0',
+      confidence: '1',
 
       reputationReward: '10',
       nativeTokenReward: '10',
@@ -661,7 +661,7 @@ describe('Domain Layer', () => {
       votesAgainst: '1000000000000000000000',
       winningOutcome: 'Pass',
 
-      stakesFor: '100000000000000000000',
+      stakesFor: '101000000000000000000',
       stakesAgainst: '100000000100000000000',
       confidence: '0',
 
