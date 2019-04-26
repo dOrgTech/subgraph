@@ -24,6 +24,11 @@ export function handleRegister(event: Register): void {
   const reputationAddress = contract.nativeReputation();
   const daoTokenAddress = contract.nativeToken();
 
+  // TODO: make sure the controller isn't the UController
+  // - get the UControllerContract from the store and check
+  //   its address. UControllerContract doesn't exist currently,
+  //   should it be added?
+
   // These create calls tell GraphNode to watch these
   // contracts, and feed their events to these mappings
   Avatar.create(avatarAddress);
@@ -36,6 +41,7 @@ export function handleRegister(event: Register): void {
   //   events that've happened in the past? If not, we'd be missing
   //   data as we're starting to watch them upon the dao being added
   //   to the registry.
+  // - Should this all be happening here or within the domain?
 
   // TODO: this will not be needed if previous events are processed.
   //       This is because `handleRegisterScheme` will be called and
