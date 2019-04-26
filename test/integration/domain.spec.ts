@@ -112,18 +112,18 @@ describe('Domain Layer', () => {
     );
 
     await daoRegistry.methods.propose(addresses.Avatar).send();
-    register = (await sendQuery(getRegister, 2000)).dao.register;
+    register = (await sendQuery(getRegister, 5000)).dao.register;
     expect(register).toEqual('proposed');
 
     await daoRegistry.methods.register(addresses.Avatar, 'test').send();
-    register = (await sendQuery(getRegister, 2000)).dao.register;
+    register = (await sendQuery(getRegister, 5000)).dao.register;
     expect(register).toEqual('registered');
 
     await daoRegistry.methods.unRegister(addresses.Avatar).send();
-    register = (await sendQuery(getRegister, 2000)).dao.register;
+    register = (await sendQuery(getRegister, 5000)).dao.register;
     expect(register).toEqual('unRegistered');
 
-  }, 20000);
+  }, 40000);
 
   it('Sanity', async () => {
     const accounts = web3.eth.accounts.wallet;

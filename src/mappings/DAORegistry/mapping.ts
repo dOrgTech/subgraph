@@ -20,7 +20,7 @@ export function handleRegister(event: Register): void {
 
   const contract = AvatarContract.bind(event.params._avatar);
   const avatarAddress = contract._address;
-  const controllerAddress = contract.owner();
+  /*const controllerAddress = contract.owner();
   const reputationAddress = contract.nativeReputation();
   const daoTokenAddress = contract.nativeToken();
 
@@ -50,7 +50,7 @@ export function handleRegister(event: Register): void {
     avatarAddress,
     daoTokenAddress,
     reputationAddress
-  );
+  );*/
 
   domain.daoRegister(avatarAddress, 'registered');
 }
