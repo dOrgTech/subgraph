@@ -1,5 +1,7 @@
+abis:
+  - DAORegistry
 entities:
-  - Dummy
+  - DAORegistryContract
 eventHandlers:
   - event: Propose(address)
     handler: handlePropose
@@ -7,3 +9,8 @@ eventHandlers:
     handler: handleRegister
   - event: UnRegister(address)
     handler: handleUnRegister
+templates:
+  - Avatar
+  - Controller
+  - Reputation
+  - DAOToken
